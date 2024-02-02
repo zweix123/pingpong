@@ -15,7 +15,7 @@
 #include "util.h"
 #include "common.h"
 
-struct {
+thread_local struct {
     long long read_start;
     long long read_end;
     long long write_start;
