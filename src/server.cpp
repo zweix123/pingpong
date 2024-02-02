@@ -12,8 +12,8 @@
 #include <iostream>
 #include <vector>
 
-#include "util.h"
 #include "common.h"
+#include "util.h"
 
 thread_local struct {
     long long read_start;
@@ -46,13 +46,9 @@ class Server {
         int interval = 5;
         int count = 3;
         if (setsockopt(sock_, SOL_SOCKET, SO_KEEPALIVE, &enabled, sizeof(enabled)) != 0) assert(false);
-        // LOG_ERR("Failed to enable SO_KEEPALIVE with error: ",  strerror(errno));
         if (setsockopt(sock_, SOL_TCP, TCP_KEEPIDLE, &idleTime, sizeof(idleTime)) != 0) assert(false);
-        // LOG_ERR("Failed to enable TCP_KEEPIDLE with error: ",  strerror(errno));
         if (setsockopt(sock_, SOL_TCP, TCP_KEEPINTVL, &interval, sizeof(interval)) != 0) assert(false);
-        // LOG_ERR("Failed to enable TCP_KEEPINTVL with error: ",  strerror(errno));
         if (setsockopt(sock_, SOL_TCP, TCP_KEEPCNT, &count, sizeof(count)) != 0) assert(false);
-        // LOG_ERR("Failed to enable TCP_KEEPCNT with error: "  ,  strerror(errno));
 
         memset((void *)&addr_, 0, sizeof(addr_));
         addr_.sin_family = AF_INET;
@@ -99,7 +95,6 @@ class Server {
                 TRACEPOINT(read_end);
 
                 TRACEPOINT(write_start);
-                // ret = write(new_sock, buffer, BUFFER_SIZE);
                 ret = send(new_sock, (const void *)buffer, BUFFER_SIZE, MSG_DONTWAIT | MSG_NOSIGNAL);
                 assert(ret == BUFFER_SIZE);
                 TRACEPOINT(write_end);

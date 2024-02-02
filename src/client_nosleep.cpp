@@ -8,15 +8,13 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <thread>
 #include <string>
+#include <thread>
 
-#include "util.h"
 #include "common.h"
+#include "util.h"
 
 unsigned char buffer[BUFFER_SIZE];
-
-std::chrono::milliseconds sleepTime(1);
 
 class Client {
   public:
@@ -39,11 +37,8 @@ class Client {
         for (int i = 0; i < 10000; ++i) {
             ret = write(sock_, buffer, BUFFER_SIZE);
             assert(ret == BUFFER_SIZE);
-
             ret = read(sock_, buffer, BUFFER_SIZE);
             assert(ret == BUFFER_SIZE);
-
-            std::this_thread::sleep_for(sleepTime);
         }
     }
 
@@ -57,7 +52,6 @@ int main() {
         Client client;
         auto start = getNanoEpochTime();
         client.communicate();
-
         auto end = getNanoEpochTime();
         std::cout << "Cost: " << end - start << std::endl;
     }
