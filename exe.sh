@@ -19,4 +19,4 @@ ps aux | grep "server" | grep "./build/src" | awk '{print $2}' | xargs kill
 sleep 2
 echo nosleep fin
 
-python3.10 profiling.py
+python3 profiling.py
